@@ -6,7 +6,9 @@ exports.createUser = async (data) => {
       return await newUser.save(); 
   };
 
-  exports.findUser = async (userId) => {
+  exports.findUserById = async (userId) => {
+    console.log(userId);
+    console.log(await User.findOne({ userId: userId }));
     return await User.findOne({ userId: userId }); 
 };
 

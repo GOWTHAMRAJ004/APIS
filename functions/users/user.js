@@ -2,7 +2,7 @@ const express = require("express");
 const { hasAllProperties } = require("../../services/helpers/hasAllProperties");
 const { constructCreateUser } = require("../../services/helpers/constructCreator");
 const { createUserParams } = require("../../services/helpers/parameterChecks");
-const { createUser, getAllUser, deleteUser, findUser, updateUser } = require("../../services/database/user");
+const { createUser, getAllUser, deleteUser, updateUser, findUserById } = require("../../services/database/user");
 const user = require("../../models/userSchema");
 
 const router = express.Router();
@@ -48,20 +48,19 @@ router.get("/getAllUser", async (req, res) => {
     }
 });
 
-router.get("/deleteUser/:userId", async (req, res) => {
+router.delete("/deleteUser/:userId", async (req, res) => {
     try {
         const { userId } = req.params;
         console.log(userId);
-        const existingUser = await findUser(userId);
+        const existingUser = await findUserById(userId);
         console.log(existingUser);
 
         if (!existingUser) {
-            console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             return res.status(404).json({ error: "User not found" });
         }
 
         const users = await deleteUser(userId); 
-        console.log("dfffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        console.log(users);
         return res.status(200).json("User deleted sucessfully"); 
     } catch (error) {
         console.error("Error fetching users:", error.message);
@@ -85,6 +84,20 @@ router.put("/updateUser/:userId", async (req, res) => {
     } catch (error) {
         console.error("Error updating user:", error.message);
         return res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+});
+
+router.get("/findUserById/:userId", async (req, res) => {
+    try {
+        const {userId} = req.params;
+        const users = await findUserById(userId); 
+        console.log(users);
+        return res.status(200).json(users); 
+    } catch (error) {
+        console.error("Error fetching users:", error.message);
+        return res.status(500).json({
+            error: error.message || "Internal Server Error"
+        });
     }
 });
 module.exports = router;

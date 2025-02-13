@@ -1,4 +1,3 @@
-const express = require("express")
 const product = require("../../models/productSchema");
 
 exports.createproduct = async (data) => {

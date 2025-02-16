@@ -48,25 +48,26 @@ exports.getAllUser =  async (req, res) => {
 };
 
  exports.deleteUser = async (req, res) => {
-    try {
-        const { userId } = req.params;
-        console.log(userId);
-        const existingUser = await findUser(userId);
-        console.log(existingUser);
-
-        if (!existingUser) {
-            return res.status(404).json({ error: "User not found" });
+     try {
+            const { userId } = req.params;
+            console.log(userId);
+            const existingUser = await findUserById(userId);
+            console.log(existingUser);
+    
+            if (!existingUser) {
+                return res.status(404).json({ error: "User not found" });
+            }
+    
+            const users = await deleteUser(userId); 
+            console.log(users);
+            return res.status(200).json("User deleted sucessfully"); 
+        } catch (error) {
+            console.error("Error fetching users:", error.message);
+            return res.status(500).json({
+                error: error.message || "Internal Server Error"
+            });
         }
-
-        const users = await deleteUser(userId); 
-        return res.status(200).json("User deleted sucessfully"); 
-    } catch (error) {
-        console.error("Error fetching users:", error.message);
-        return res.status(500).json({
-            error: error.message || "Internal Server Error"
-        });
-    }
-};
+    };
 exports.updateUser =  async (req, res) => {
     try {
         const { userId } = req.params;
@@ -82,6 +83,20 @@ exports.updateUser =  async (req, res) => {
     } catch (error) {
         console.error("Error updating user:", error.message);
         return res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+};
+
+exports.findUserById = async (req, res) => {
+    try {
+        const {userId} = req.params;
+        const users = await findUserById(userId); 
+        console.log(users);
+        return res.status(200).json(users); 
+    } catch (error) {
+        console.error("Error fetching users:", error.message);
+        return res.status(500).json({
+            error: error.message || "Internal Server Error"
+        });
     }
 };
 

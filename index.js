@@ -1,30 +1,30 @@
-const cors = require("cors");
-const express = require("express")
-const mongoose = require("mongoose")
-const product = require("./models/productSchema")
+const express = require("express");
 const dotenv = require("dotenv");
-dotenv.config();
-var app = express()
-app.get("/",function(request,response){
-response.send("Hello World!")
-})
-app.use(express.json());
-app.use(cors());
-app.use("/users", require("./functions/users/user"));
-console.log(process.env.MONGODB_CONNECTION_URL);
-mongoose.connect(process.env.MONGODB_CONNECTION_URL)
-.then(()=>{
-    app.listen(8085, function () {
-        console.log("Started application on port %d", 10000)
-        });
-}).catch(
-    err => console.log("Error occurred:" + err)
-)
+const connectDB  = require("./config/config");
+const router = require("./routers/userRouter");
 
-const products = {
-    productDetails: {
-        productName: "Smartphone X200",
-        manufactureDate: "2024-01-15",
-        productId: "PROD123456"
-    }
-}
+dotenv.config();
+
+const app = express();
+app.use(express.json());
+app.use("/api", router); 
+
+// Default Route
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+// Connect to DB & Start Server
+const startServer = async () => {
+  try {
+    await connectDB(); 
+    app.listen(8085, () => {
+      console.log("Started application on port 8085");
+    });
+  } catch (err) {
+    console.error("Error occurred while connecting to DB:", err);
+    process.exit(1); 
+  }
+};
+
+startServer();

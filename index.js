@@ -2,10 +2,12 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB  = require("./config/config");
 const router = require("./routers/userRouter");
+const cors = require("cors"); // Correct import
 
 dotenv.config();
 
 const app = express();
+app.use(cors()); // Apply CORS middleware
 app.use(express.json());
 app.use("/api", router); 
 
@@ -18,8 +20,8 @@ app.get("/", (req, res) => {
 const startServer = async () => {
   try {
     await connectDB(); 
-    app.listen(8085, () => {
-      console.log("Started application on port 8085");
+    app.listen(8086, () => {
+      console.log("Started application on port 8086");
     });
   } catch (err) {
     console.error("Error occurred while connecting to DB:", err);

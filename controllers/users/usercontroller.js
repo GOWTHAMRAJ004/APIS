@@ -51,7 +51,7 @@ exports.getAllUser =  async (req, res) => {
      try {
             const { userId } = req.params;
             console.log(userId);
-            const existingUser = await findUserById(userId);
+            const existingUser = await findUser(userId);
             console.log(existingUser);
     
             if (!existingUser) {
@@ -89,7 +89,7 @@ exports.updateUser =  async (req, res) => {
 exports.findUserById = async (req, res) => {
     try {
         const {userId} = req.params;
-        const users = await findUserById(userId); 
+        const users = await findUser(userId); 
         console.log(users);
         return res.status(200).json(users); 
     } catch (error) {

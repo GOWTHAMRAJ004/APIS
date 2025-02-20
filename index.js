@@ -23,7 +23,7 @@ const startServer = async () => {
   try {
     await connectDB(); 
     app.listen(8085, () => {
-      console.log("Started application on port 8085");
+      console.log("Started application on port 8086");
     });
   } catch (err) {
     console.error("Error occurred while connecting to DB:", err);

@@ -73,6 +73,7 @@ exports.updateUser =  async (req, res) => {
         const { userId } = req.params;
         const {field, value} = req.body;
         const updatedUser = await updateUser(userId, field, value);
+        console.log(updateUser);
         
         if (!updatedUser) {
             return res.status(404).json({ error: "User not found" });

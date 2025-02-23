@@ -3,20 +3,20 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
-    userId: { 
+    productId: { 
         type: String, 
         required: true, 
         unique: true 
     },
-    name: { 
+    productName: { 
         type: String, 
         required: true 
     },
-    address: { 
+    ShippingAddress: { 
         type: String, 
         required: true 
     },
-    creditPoints: { 
+    discount: { 
         type: Number, 
         default: 0 
     },

@@ -1,21 +1,22 @@
 exports.constructCreateUser = (data) => {
     
     const {
-        userId,
-        name,
-        address,
-        creditPoints,
+        productId,
+        productName,
+        ShippingAddress,
+        discount,
         phoneNumber,
     } = data;
 
 
     return {
-        userId: userId,
-        name:name,
-        address:address,
-        creditPoints:creditPoints,
+        productId: productId,
+        productName:productName,
+        ShippingAddress: ShippingAddress,
+        discount: discount,
         phoneNumber:phoneNumber,
     }
+   
 }
 
 exports.constructCreateProduct = (data) => {

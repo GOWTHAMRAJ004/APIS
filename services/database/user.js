@@ -6,20 +6,22 @@ exports.createUser = async (data) => {
       return await newUser.save(); 
   };
 
-  exports.findUser = async (userId) => {
-    console.log(userId);
-    console.log(await User.findOne({ userId: userId }));
-    return await User.findOne({ userId: userId }); 
+  exports.findUser = async (productId) => {
+    console.log(productId);
+    console.log(await User.findOne({ productId: productId }));
+    return await User.findOne({ productId: productId }); 
 };
 
-exports.updateUser = async (userId, field, value) => {
+exports.updateUse = async (productId, field, value) => {
    return await User.findOneAndUpdate(
-    { userId: userId }, {[field] : value}, {new : true}
+    { productId: productId }, 
+            { $set: { [field]: value } }, 
+            { new: true }
     );
 }
 
-exports.deleteUser = async (userId) => {
-    return await User.findOneAndDelete({ userId: userId });
+exports.deleteUser = async (productId) => {
+    return await User.findOneAndDelete({ productId: productId });
 }
 exports.getAllUser = async () => {
     return await User.find();

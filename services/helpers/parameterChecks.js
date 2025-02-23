@@ -7,9 +7,9 @@ exports.createOrderparams =  [
 
   ];
 exports.createUserParams = [
-    "userId",
-    "name",
-    "address",
-    "creditPoints",
+    "productId",
+    "productName",
+    "ShippingAddress",
+    "discount",
     "phoneNumber",
 ]

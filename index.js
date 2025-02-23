@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 const startServer = async () => {
   try {
     await connectDB(); 
-    app.listen(8086, () => {
+    app.listen(8087, () => {
       console.log("Started application on port 8086");
     });
   } catch (err) {

@@ -2,7 +2,7 @@ const express = require("express");
 const { hasAllProperties } = require("../../services/helpers/hasAllProperties");
 const { constructCreateUser } = require("../../services/helpers/constructCreator");
 const { createUserParams } = require("../../services/helpers/parameterChecks");
-const { createUser, getAllUser, deleteUser, findUser, updateUser } = require("../../services/database/user");
+const { createUser, getAllUser, deleteUser, findUser, updateUse } = require("../../services/database/user");
 const user = require("../../models/userSchema");
 
 const router = express.Router();
@@ -15,16 +15,16 @@ exports.createUser =  async (req, res) => {
        
         const newUser = constructCreateUser(body);
       
-        const existingUser = await user.findOne({ userId: newUser.userId });
+        const existingUser = await user.findOne({ productId: newUser.productId });
       
         if (existingUser) {
             return res.status(409).json({
-                 error: "User with this ID already exists" 
+                 error: "product with this ID already exists" 
                 });
         }
         const savedUser = await createUser(newUser);
         return res.status(201).json({
-             message: "User created successfully",
+             message: "product created successfully",
               user: savedUser });
 
     } catch (error) {
@@ -40,7 +40,7 @@ exports.getAllUser =  async (req, res) => {
         const users = await getAllUser(); 
         return res.status(200).json(users); 
     } catch (error) {
-        console.error("Error fetching users:", error.message);
+        console.error("Error fetching product:", error.message);
         return res.status(500).json({
             error: error.message || "Internal Server Error"
         });
@@ -49,18 +49,18 @@ exports.getAllUser =  async (req, res) => {
 
  exports.deleteUser = async (req, res) => {
      try {
-            const { userId } = req.params;
-            console.log(userId);
-            const existingUser = await findUser(userId);
+            const { productId } = req.params;
+            console.log(productId);
+            const existingUser = await findUser(productId);
             console.log(existingUser);
     
             if (!existingUser) {
-                return res.status(404).json({ error: "User not found" });
+                return res.status(404).json({ error: "product not found" });
             }
     
-            const users = await deleteUser(userId); 
-            console.log(users);
-            return res.status(200).json("User deleted sucessfully"); 
+            const product = await deleteUser(productId); 
+            console.log(product);
+            return res.status(200).json("product deleted sucessfully"); 
         } catch (error) {
             console.error("Error fetching users:", error.message);
             return res.status(500).json({
@@ -70,15 +70,15 @@ exports.getAllUser =  async (req, res) => {
     };
 exports.updateUser =  async (req, res) => {
     try {
-        const { userId } = req.params;
+        const { productId } = req.params;
         const {field, value} = req.body;
-        const updatedUser = await updateUser(userId, field, value);
+        const updatedUser = await updateUse(productId, field, value);
         
         if (!updatedUser) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ error: "product not found" });
         }
 
-        return res.status(200).json({ message: "User updated successfully", user: updatedUser });
+        return res.status(200).json({ message: "product updated successfully", user: updatedUser });
 
     } catch (error) {
         console.error("Error updating user:", error.message);
@@ -88,8 +88,8 @@ exports.updateUser =  async (req, res) => {
 
 exports.findUserById = async (req, res) => {
     try {
-        const {userId} = req.params;
-        const users = await findUser(userId); 
+        const {productId} = req.params;
+        const users = await findUser(productId); 
         console.log(users);
         return res.status(200).json(users); 
     } catch (error) {

@@ -2,14 +2,16 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB  = require("./config/config");
 const router = require("./routers/userRouter");
-const cors = require("cors"); // Correct import
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
-app.use(cors()); // Apply CORS middleware
+app.use(cors());
 app.use(express.json());
 app.use("/api", router); 
+
+
 
 // Default Route
 app.get("/", (req, res) => {
@@ -20,7 +22,7 @@ app.get("/", (req, res) => {
 const startServer = async () => {
   try {
     await connectDB(); 
-    app.listen(8087, () => {
+    app.listen(8085, () => {
       console.log("Started application on port 8086");
     });
   } catch (err) {
